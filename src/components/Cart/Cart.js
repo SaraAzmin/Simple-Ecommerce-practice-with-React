@@ -6,7 +6,7 @@ const Cart = ({ cart }) => {
     let totalPrice = 0;
     let totalShipping = 0;
 
-
+    //calculating total price and total shipping
     for (const product of cart) {
         totalPrice += product.price;
         totalShipping += product.shipping;

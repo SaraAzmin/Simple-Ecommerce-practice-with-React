@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { addToDb, getStoredCart } from '../../utilities/fakedb';
 import Cart from '../Cart/Cart';
 import Product from '../Product/Product';
 import './Shop.css';
@@ -16,6 +17,23 @@ const Shop = () => {
             .then(data => setProducts(data))
     }, []);
 
+    //fetching previously added products in cart
+    useEffect(() => {
+        const storedCart = getStoredCart();
+        const savedCart = [];
+
+        for (const id in storedCart) {
+            const addedProduct = products.find(product => product.id === id);
+            if (addedProduct) {
+                const quantity = storedCart[id];
+                addedProduct.quantity = quantity;
+                savedCart.push(addedProduct);
+            }
+        }
+
+        setCart(savedCart);
+    }, [products]);
+
     //event listenter for add to cart button of product
     //declered here in parent component to have it accessible in the parent class
     const handleAddToCart = (product) => {
@@ -23,6 +41,9 @@ const Shop = () => {
         //spreading the already added products and adding new product
         const newCart = [...cart, product];
         setCart(newCart);
+
+        //adding to local storage
+        addToDb(product.id);
     }
 
     return (
