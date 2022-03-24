@@ -16,6 +16,8 @@ const Product = (props) => {
                 <p><small>Seller: {seller}</small></p>
                 <p><small>Rating: {ratings}</small></p>
             </div>
+
+            {/* calling it in an arrow function, otherwise the function will be called at the begining */}
             <button onClick={() => props.handleAddToCart(props.product)} className='cart-button'><p>Add to Cart</p>
                 <FontAwesomeIcon icon={faShoppingCart}></FontAwesomeIcon></button>
         </div>
