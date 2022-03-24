@@ -36,14 +36,29 @@ const Shop = () => {
 
     //event listenter for add to cart button of product
     //declered here in parent component to have it accessible in the parent class
-    const handleAddToCart = (product) => {
+    const handleAddToCart = (selectedProduct) => {
 
         //spreading the already added products and adding new product
-        const newCart = [...cart, product];
+        let newCart = [];
+        const exist = cart.find(product => product.id === selectedProduct.id);
+
+        //if product not already added then add new
+        if (!exist) {
+
+            selectedProduct.quantity = 1;
+            newCart = [...cart, selectedProduct];
+        }
+        //if product already added then increase quantity
+        else {
+            const remaining = cart.filter(product => product.id !== selectedProduct.id);
+            exist.quantity += 1;
+            newCart = [...remaining, exist];
+        }
+
         setCart(newCart);
 
         //adding to local storage
-        addToDb(product.id);
+        addToDb(selectedProduct.id);
     }
 
     return (
