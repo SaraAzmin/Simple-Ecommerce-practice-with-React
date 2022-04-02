@@ -1,15 +1,24 @@
-.shop-container{
+.shop-container {
     display: grid;
     grid-template-columns: 4fr 1fr;
     padding-left: 100px;
-    
+
 }
-.product-container{
+
+.product-container {
     display: grid;
-    grid-template-columns: repeat(3,1fr);
+    grid-template-columns: repeat(3, 1fr);
     gap: 45px;
     margin-top: 50px;
 }
-.cart-container{
+
+.cart-container {
     background-color: rgba(255, 153, 0, 0.3);
+}
+
+.review-button {
+    background-color: red;
+    color: white;
+    border: 0;
+    padding: 10px 20px;
 }

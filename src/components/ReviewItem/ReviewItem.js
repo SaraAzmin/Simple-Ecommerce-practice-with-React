@@ -3,9 +3,9 @@ import React from 'react';
 import './ReviewItem.css';
 import { faTrashAlt } from '@fortawesome/free-solid-svg-icons';
 
-const ReviewItem = (props) => {
+const ReviewItem = ({ product, handleRemoveProduct }) => {
 
-    const { name, img, price, shipping, quantity } = props.product;
+    const { name, img, price, shipping, quantity } = product;
     return (
         <div className='review-item'>
             <div>
@@ -22,7 +22,7 @@ const ReviewItem = (props) => {
 
                 </div>
                 <div className="delete-button-container">
-                    <button>
+                    <button onClick={() => handleRemoveProduct(product)}>
                         <FontAwesomeIcon className='delete-icon' icon={faTrashAlt}></FontAwesomeIcon>
                     </button>
                 </div>
