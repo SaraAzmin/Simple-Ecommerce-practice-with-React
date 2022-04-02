@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import useCart from '../../Hooks/useCart';
 import useProducts from '../../Hooks/useProducts';
 import { addToDb, getStoredCart } from '../../utilities/fakedb';
 import Cart from '../Cart/Cart';
@@ -7,26 +8,14 @@ import './Shop.css';
 
 const Shop = () => {
 
+    //using useproduct hook instead of usestate here
     const [products, setProducts] = useProducts([]);
 
-    const [cart, setCart] = useState([]);
-
     //fetching previously added products in cart
-    useEffect(() => {
-        const storedCart = getStoredCart();
-        const savedCart = [];
+    //using usecart hook instead of usestate and useffect
+    const [cart, setCart] = useCart(products);
 
-        for (const id in storedCart) {
-            const addedProduct = products.find(product => product.id === id);
-            if (addedProduct) {
-                const quantity = storedCart[id];
-                addedProduct.quantity = quantity;
-                savedCart.push(addedProduct);
-            }
-        }
 
-        setCart(savedCart);
-    }, [products]);
 
     //event listenter for add to cart button of product
     //declered here in parent component to have it accessible in the parent class
