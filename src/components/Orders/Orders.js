@@ -2,6 +2,7 @@ import React from 'react';
 import useCart from '../../Hooks/useCart';
 import useProducts from '../../Hooks/useProducts';
 import Cart from '../Cart/Cart';
+import ReviewItem from '../ReviewItem/ReviewItem';
 
 const Orders = () => {
 
@@ -11,8 +12,10 @@ const Orders = () => {
 
     return (
         <div className='shop-container'>
-            <div className='product-container'>
-
+            <div className='review-items-container'>
+                {
+                    cart.map(product => <ReviewItem product={product} key={product.id}></ReviewItem>)
+                }
             </div>
             <div className='cart-container'>
                 <Cart cart={cart}></Cart>

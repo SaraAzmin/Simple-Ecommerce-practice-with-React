@@ -15,8 +15,6 @@ const Shop = () => {
     //using usecart hook instead of usestate and useffect
     const [cart, setCart] = useCart(products);
 
-
-
     //event listenter for add to cart button of product
     //declered here in parent component to have it accessible in the parent class
     const handleAddToCart = (selectedProduct) => {
