@@ -10,11 +10,34 @@ import './Shop.css';
 const Shop = () => {
 
     //using useproduct hook instead of usestate here
-    const [products, setProducts] = useProducts([]);
+    //const [products, setProducts] = useProducts([]);
 
     //fetching previously added products in cart
     //using usecart hook instead of usestate and useffect
-    const [cart, setCart] = useCart(products);
+    const [cart, setCart] = useCart();
+
+    const [pageCount, setPageCount] = useState(0);
+    const [page, setPage] = useState(0);
+    const [size, setSize] = useState(10);
+    const [products, setProducts] = useState([]);
+
+
+    useEffect(() => {
+        fetch(`http://localhost:5000/product?page=${page}&size=${size}`)
+            .then(res => res.json())
+            .then(data => setProducts(data));
+    }, [page, size]);
+
+    useEffect(() => {
+        fetch('http://localhost:5000/productCount')
+            .then(res => res.json())
+            .then(data => {
+                const count = data.count;
+                const pages = Math.ceil(count / 10);
+                setPageCount(pages);
+            })
+    }, [])
+
 
     //event listenter for add to cart button of product
     //declered here in parent component to have it accessible in the parent class
@@ -45,16 +68,32 @@ const Shop = () => {
 
     return (
         <div className='shop-container'>
-            <div className="product-container">
-                {
-                    products.map(product => <Product
-                        key={product._id}
-                        product={product}
+            <div>
+                <div className="product-container">
+                    {
+                        products.map(product => <Product
+                            key={product._id}
+                            product={product}
 
-                        //sending the event listener to the product where it will be used
-                        handleAddToCart={handleAddToCart}
-                    ></Product>)
-                }
+                            //sending the event listener to the product where it will be used
+                            handleAddToCart={handleAddToCart}
+                        ></Product>)
+                    }
+                </div>
+                <div className='pagination'>
+                    {
+                        [...Array(pageCount).keys()].map(number =>
+                            <button
+                                className={page === number ? 'selected' : ''}
+                                onClick={() => setPage(number)}>{number + 1}</button>)
+                    }
+                    <select onChange={e => setSize(e.target.value)}>
+                        <option value="5">5</option>
+                        <option value="10" selected>10</option>
+                        <option value="15">15</option>
+                        <option value="20">20</option>
+                    </select>
+                </div>
             </div>
             <div className="cart-container">
                 <Cart cart={cart}>

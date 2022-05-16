@@ -22,3 +22,22 @@
     border: 0;
     padding: 10px 20px;
 }
+
+.pagination {
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+    margin: 20px 0px;
+}
+
+.pagination button {
+    margin-right: 10px;
+    background-color: white;
+    border: 1px solid orange;
+    padding: 5px 10px;
+}
+
+.pagination .selected {
+    background-color: orange;
+    color: white;
+}
