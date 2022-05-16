@@ -22,7 +22,7 @@ const Shop = () => {
 
         //spreading the already added products and adding new product
         let newCart = [];
-        const exist = cart.find(product => product.id === selectedProduct.id);
+        const exist = cart.find(product => product._id === selectedProduct._id);
 
         //if product not already added then add new
         if (!exist) {
@@ -32,7 +32,7 @@ const Shop = () => {
         }
         //if product already added then increase quantity
         else {
-            const remaining = cart.filter(product => product.id !== selectedProduct.id);
+            const remaining = cart.filter(product => product._id !== selectedProduct._id);
             exist.quantity += 1;
             newCart = [...remaining, exist];
         }
@@ -40,7 +40,7 @@ const Shop = () => {
         setCart(newCart);
 
         //adding to local storage
-        addToDb(selectedProduct.id);
+        addToDb(selectedProduct._id);
     }
 
     return (
@@ -48,7 +48,7 @@ const Shop = () => {
             <div className="product-container">
                 {
                     products.map(product => <Product
-                        key={product.id}
+                        key={product._id}
                         product={product}
 
                         //sending the event listener to the product where it will be used
